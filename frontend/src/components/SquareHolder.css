@@ -1,0 +1,35 @@
+/* SquareHolder.css
+    Container that sits below a (possibly fixed) navbar and lays out square items
+    in rows of three (responsive to 2/1 columns on smaller screens). */
+.squareholder {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 3200px;
+  margin: 0 auto;
+
+  display: flexbox;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    /* Optional: Add some padding and a light background color */
+    min-height: 100vh; /* Ensure it takes at least the full viewport height */
+
+
+}
+
+@media (max-width: 900px) {
+  .squareholder {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .squareholder {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+

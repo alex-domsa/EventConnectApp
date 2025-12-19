@@ -1,0 +1,844 @@
+@import "tailwindcss";
+
+/* this is taken from my personal portfolio site */
+/* change around some values to see how it affects the theme */
+/* preferabley change them around allot so it doesnt look identical to my portfolio */
+/* ferdia */
+
+/* some keywords for you */
+/* float - elemts that float up and down */
+/* pulse-subtle - elements that pulse subtly */
+/* fade-in - elements that fade in */
+
+/* you can use these animations by adding the following class to your element */
+/* animate-float */
+/* animate-pulse-subtle */
+/* animate-fade-in */
+
+/* you can also add a delay to the fade-in animation by using the following classes */
+/* animate-[fade-in-delay-1] */
+/* animate-[fade-in-delay-2] */
+/* animate-[fade-in-delay-3] */
+
+/* for colors use the following classes */
+/* bg-background - background color */
+/* text-foreground - text color */
+/* border-border - border color */
+
+/* heres some extras you might find useful */
+
+/* card - card background color */
+/* container - container class with responsive max-width and padding */
+/* text-glow - text glow effect */
+/* card-hover - card hover effect */
+/* gradient-border - gradient border effect */
+/* cosmic-button - cosmic button effect */
+
+
+@theme {
+  --border: hsl(var(--border));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-card: hsl(var(--card));
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-subtle: pulse-subtle 4s ease-in-out infinite;
+  --animate-fade-in: fade-in 0.7s ease-out forwards;
+  --animate-fade-in-delay-1: fade-in 0.7s ease-out 0.2s forwards;
+  --animate-fade-in-delay-2: fade-in 0.7s ease-out 0.4s forwards;
+  --animate-fade-in-delay-3: fade-in 0.7s ease-out 0.6s forwards;
+  --animate-fade-in-delay-4: fade-in 0.7s ease-out 0.8s forwards;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* one-shot entrance that only glides up (no glide back down) */
+  @keyframes float-up {
+    from {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes pulse-subtle {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0.2;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* --- Animation utility classes --- */
+.animate-float {
+  /* continuous subtle float (uses the defined var so other uses remain consistent) */
+  animation: var(--animate-float);
+}
+
+/* single entrance float-up (quicker, one-shot only) */
+.animate-float-up {
+  animation: float-up 0.28s cubic-bezier(.2,.9,.22,1) forwards;
+}
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 92%;
+
+    --primary: 250 47% 60%;
+    --primary-foreground: 210 40% 98%;
+
+    /* stronger light-mode border for clearer controls */
+    --border: 214 28% 14%;
+
+    /* semantic muted tokens for consistent contrast control */
+    --muted-light: rgba(15,23,42,0.78);  /* used in light mode for secondary texts */
+    --muted-weak-light: rgba(15,23,42,0.60);
+  }
+
+  .dark {
+    --background: 222 37% 6%;
+    --foreground: 213 31% 91%;
+
+    --card: 222 47% 8%;
+
+    --primary: 250 47% 60%;
+    --primary-foreground: 213 31% 91%;
+
+    /* keep dark border slightly more visible than before */
+    --border: 214 88% 88%;
+
+    /* semantic muted tokens for dark mode (lighter / more visible) */
+    --muted-dark: rgba(226,232,240,0.8);
+    --muted-weak-dark: rgba(226,232,240,0.64);
+  }
+
+  /* * {
+    @apply border-border;
+  } */
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+
+  @media (width >= 640px) {
+    max-width: 640px;
+  }
+  @media (width >= 768px) {
+    max-width: 768px;
+  }
+  @media (width >= 1024px) {
+    max-width: 1024px;
+  }
+  @media (width >= 1280px) {
+    max-width: 1280px;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+  @media (width >= 1536px) {
+    max-width: 1536px;
+  }
+  @media (width >= 1600px) {
+    max-width: 1600px;
+  }
+  @media (width >= 1920px) {
+    max-width: 1920px;
+  }
+  @media (width >= 2560px) {
+    max-width: 2560px;
+  }
+  @media (width >= 3840px) {
+    max-width: 3840px;
+  }
+  
+
+}
+
+@utility text-glow {
+  @apply relative;
+  text-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+}
+
+@utility card-hover {
+  /* ensure a starting transform so the scale transition is smooth */
+  @apply transform scale-100 transition-transform duration-300 ease-out hover:scale-[1.02] hover:shadow-lg ;
+  transform-origin: center;
+}
+
+@utility gradient-border {
+  @apply relative rounded-md;
+  background: linear-gradient(to right, hsl(var(--card)), hsl(var(--card)));
+  background-clip: padding-box;
+  border: 1px solid transparent;
+}
+
+@utility cosmic-button {
+  @apply px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium 
+  transition-all duration-300 hover:shadow-[0_0_10px_rgba(139,92,246,0.5)]
+  hover:scale-105 active:scale-95;
+}
+
+
+#root {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
+/* ---------- Dark-mode-friendly utility mappings & overrides ---------- */
+/* Map custom tokens used across components to the CSS variables already defined above.
+   This keeps components using classes like bg-primary, text-foreground, bg-card stable. */
+
+.bg-background { background-color: hsl(var(--background)) !important; }
+.text-foreground { color: hsl(var(--foreground)) !important; }
+.border-border { border-color: hsl(var(--border)) !important; }
+
+.bg-card { background-color: hsl(var(--card)) !important; }
+.bg-primary { background-color: hsl(var(--primary)) !important; }
+.text-primary-foreground { color: hsl(var(--primary-foreground)) !important; }
+
+/* Useful subtle helper so cards keep contrast in dark mode when components use bg-white/bg-gray-50 */
+.bg-white { background-color: white !important; }
+.bg-gray-50 { background-color: #f9fafb !important; }
+
+/* ---------- Dark-mode overrides for common Tailwind utilities that cause disappearing text/bg ---------- */
+/* These target html.dark (ThemeToggle adds/removes "dark" on documentElement). */
+:root[class*='dark'] .text-gray-500,
+:root.dark .text-gray-500,
+[data-theme='dark'] .text-gray-500 {
+  /* make gray-500 lighter in dark mode */
+  color: rgba(203, 213, 225, 0.9) !important;
+}
+
+:root[class*='dark'] .text-gray-900,
+:root.dark .text-gray-900,
+[data-theme='dark'] .text-gray-900 {
+  /* ensure headings using text-gray-900 remain readable */
+  color: rgba(226, 232, 240, 0.95) !important;
+}
+
+:root[class*='dark'] .text-gray-700,
+:root.dark .text-gray-700,
+[data-theme='dark'] .text-gray-700 {
+  color: rgba(203, 213, 225, 0.92) !important;
+}
+
+/* Make white/very-light backgrounds subtle in dark mode instead of pure white (prevents bright flashes) */
+:root[class*='dark'] .bg-white,
+:root.dark .bg-white,
+[data-theme='dark'] .bg-white {
+  background-color: rgba(255,255,255,0.03) !important;
+  color: inherit !important;
+}
+
+:root[class*='dark'] .bg-gray-50,
+:root.dark .bg-gray-50,
+[data-theme='dark'] .bg-gray-50 {
+  background-color: rgba(255,255,255,0.02) !important;
+}
+
+/* Border adjustments */
+:root[class*='dark'] .border-gray-200,
+:root.dark .border-gray-200,
+[data-theme='dark'] .border-gray-200 {
+  border-color: rgba(148, 163, 184, 0.18) !important;
+}
+
+/* Buttons/inputs that relied on low-contrast light colors */
+:root[class*='dark'] .text-gray-400,
+:root.dark .text-gray-400,
+[data-theme='dark'] .text-gray-400 {
+  color: rgba(148, 163, 184, 0.9) !important;
+}
+
+/* Ensure components that set .bg-card keep readable contrast in dark mode */
+:root[class*='dark'] .bg-card,
+:root.dark .bg-card,
+[data-theme='dark'] .bg-card {
+  background-color: hsl(var(--card)) !important;
+  /* approximate card text color if needed */
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Small accessibility helper: focus outlines visible in dark mode */
+:root[class*='dark'] :focus,
+:root.dark :focus,
+[data-theme='dark'] :focus {
+  outline-color: hsl(var(--primary)) !important;
+  outline-offset: 2px !important;
+}
+
+/* End of overrides */
+
+/* ensure navbar right links/icons remain visible in dark mode */
+:root[class*='dark'] .navbar-right .text-muted,
+:root.dark .navbar-right .text-muted,
+[data-theme='dark'] .navbar-right .text-muted {
+  color: rgba(226, 232, 240, 0.95) !important;
+}
+
+:root[class*='dark'] .navbar-right a,
+:root.dark .navbar-right a,
+[data-theme='dark'] .navbar-right a {
+  color: rgba(226, 232, 240, 0.95) !important;
+}
+
+:root[class*='dark'] .navbar-right svg,
+:root.dark .navbar-right svg,
+[data-theme='dark'] .navbar-right svg {
+  stroke: currentColor !important; /* lucide uses stroke=currentColor */
+  color: inherit !important;
+  opacity: 0.98;
+}
+
+/* keep hover state readable */
+:root[class*='dark'] .navbar-right a:hover,
+:root.dark .navbar-right a:hover,
+[data-theme='dark'] .navbar-right a:hover {
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Premium Edit Event styles */
+.edit-event-container {
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 14px;
+  padding: 18px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 30px rgba(2,6,23,0.06);
+}
+
+/* Hero */
+.edit-hero {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  border-radius: 12px;
+  background: var(--background);
+  margin-bottom: 18px;
+  position: relative;
+  border: 3px transparent var(--border);
+  box-shadow: 0 8px 24px rgba(56, 10, 72, 0.286);
+}
+
+.hero-left .hero-image {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 24px rgba(2,6,23,0.08);
+}
+
+.hero-body { flex: 1; }
+.hero-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0 0 6px 0;
+  color: var(--color-foreground);
+  text-shadow: 0 1px 0 rgba(0,0,0,0.02);
+  letter-spacing: -0.01em;
+}
+.hero-sub { margin: 0 0 10px 0; color: rgba(15,23,42,0.65); }
+
+.hero-meta { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+.meta-item { display:inline-flex; align-items:center; gap:8px; color: rgba(15,23,42,0.7); font-size:0.95rem; }
+.meta-icon { width:16px; height:16px; opacity:0.95; }
+
+/* Club chip */
+.club-chip { display:flex; gap:12px; align-items:center; margin-top:6px; }
+.club-avatar { width:44px; height:44px; border-radius:8px; object-fit:cover; border:1px solid var(--border); }
+.club-name { font-weight:700; }
+.club-sub { font-size:0.85rem; color: rgba(15,23,42,0.6); }
+
+/* Actions */
+.hero-actions { display:flex; gap:10px; align-items:center; }
+.btn-primary {
+  background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary)));
+  color: var(--color-primary-foreground);
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  display:inline-flex; align-items:center; gap:8px;
+  box-shadow: 0 6px 18px rgba(99,102,241,0.12);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--color-foreground);
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 10px;
+  display:inline-flex; align-items:center; gap:8px;
+}
+.btn-ghost {
+  background: transparent;
+  border: 1px dashed var(--border);
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+/* Grid layout */
+.edit-grid { display:grid; grid-template-columns: 1fr 360px; gap:20px; align-items:start; }
+@media (max-width: 900px) {
+  .edit-grid { grid-template-columns: 1fr; }
+  .hero-left .hero-image { width:96px; height:96px; }
+}
+
+/* Form styles */
+.edit-form { background: transparent; padding: 6px; display:flex; flex-direction:column; gap:12px; }
+.form-row { display:flex; flex-direction:column; gap:6px; }
+.grid-3 { display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; }
+.field-label { font-size: 0.85rem; font-weight:600; color: rgba(15,23,42,0.7); }
+.input, .textarea {
+  background: var(--background);
+  color: var(--foreground);
+
+  border: 1px solid var(--border);
+
+  box-shadow: 0 6px 20px rgba(31, 49, 129, 0.358);
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: box-shadow .15s, transform .08s;
+}
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--foreground / 0.6);
+}
+.input:focus, .textarea:focus {
+  outline: none;
+  box-shadow: 0 10px 30px color-mix(in srgb, hsl(v  ar(--primary)) 14%, transparent);
+  border-color: hs  l(var(--primary));
+  transform: translateY(-1px);
+}
+
+/* Preview */
+.edit-preview { position:relative; }
+.preview-card { border-radius:12px; overflow:hidden; background: var(--color-card); border:1px solid var(--border); box-shadow: 0 8px 30px rgba(2,6,23,0.06); }
+.preview-image { width:100%; height:160px; object-fit:cover; display:block; }
+.preview-body { padding:12px; }
+.preview-title { font-weight:700; margin:0 0 6px 0; color: var(--foreground); }
+.preview-meta { font-size:0.9rem; color: rgba(15,23,42,0.65); display:flex; flex-direction:column; gap:6px; margin-bottom:8px; }
+.preview-desc { color: var(--foreground); }
+
+/* Muted text helper */
+.muted { color: rgba(15,23,42,0.55); }
+
+/* Dark mode adjustments */
+:root[class*='dark'] .muted { color: rgba(226,232,240,0.7) !important; }
+:root[class*='dark'] .hero-sub,
+:root.dark .hero-sub,
+[data-theme='dark'] .hero-sub { color: rgba(226,232,240,0.72) !important; }
+:root[class*='dark'] .field-label { color: rgba(226,232,240,0.82) !important; }
+:root[class*='dark'] .meta-item { color: rgba(226,232,240,0.85) !important; }
+:root[class*='dark'] .btn-outline { border-color: rgba(148,163,184,0.12) !important; color: rgba(226,232,240,0.92) !important; }
+:root[class*='dark'] .edit-event-container { border-color: rgba(148,163,184,0.12) !important; background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.0)); }
+:root[class*='dark'] .hero-left .hero-image,
+:root[class*='dark'] .club-avatar { border-color: rgba(148,163,184,0.12) !important; }
+:root[class*='dark'] .preview-card { background: hsl(var(--card)); border-color: rgba(148,163,184,0.12) !important; }
+
+/* Improve contrast & visibility for EditEvent (light + dark) */
+.edit-hero,
+.edit-event-container,
+.edit-grid,
+.edit-form,
+.edit-preview,
+.preview-card {
+  color: hsl(var(--foreground));
+}
+
+/* Headings / hero */
+.hero-title {
+  color: hsl(var(--foreground));
+  text-shadow: 0 1px 0 rgba(0,0,0,0.02);
+  letter-spacing: -0.01em;
+}
+
+/* Sub/headline / muted copy */
+.hero-sub,
+.muted,
+.club-sub,
+.preview-meta,
+.preview-desc,
+.field-label,
+.meta-item {
+  /* use foreground with slight reduced opacity for hierarchy */
+  color: hsl(var(--foreground) / 0.82);
+}
+
+/* Labels & small text need to be clear */
+.field-label {
+  font-weight: 700;
+  color: hsl(var(--foreground) / 0.88);
+}
+
+/* Inputs / textarea — ensure strong contrast and visible focus */
+.input,
+.textarea {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  border: 100px solid hsl(var(--border));
+  box-shadow: 10 6px 20px rgba(2,6,23,0.04);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: hsl(var(--foreground) / 0.6);
+}
+
+/* Focus state (accessible in both modes) */
+.input:focus,
+.textarea:focus {
+  outline: none;
+  box-shadow: 0 10px 30px color-mix(in srgb, hsl(var(--primary)) 14%, transparent);
+  border-color: hsl(var(--primary));
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(90deg, hsl(var(--primary)), color-mix(in srgb, hsl(var(--primary)) 88%, black 6%));
+  color: hsl(var(--primary-foreground));
+  box-shadow: 0 8px 28px color-mix(in srgb, hsl(var(--primary)) 18%, transparent);
+  border: 1px solid color-mix(in srgb, hsl(var(--primary)) 12%, transparent);
+}
+.btn-outline,
+.btn-ghost {
+  color: hsl(var(--foreground));
+  border-color: hsl(var(--border));
+}
+
+/* Club chip */
+.club-chip .club-info .club-name {
+  color: hsl(var(--foreground));
+  font-weight: 700;
+}
+.club-avatar {
+  border: 1px solid hsl(var(--border));
+}
+
+/* Preview card text */
+.preview-title { color: hsl(var(--foreground)); }
+.preview-meta { color: hsl(var(--foreground) / 0.82); }
+
+/* Lucide icons inside these components should inherit currentColor (ensure stroke uses currentColor) */
+.edit-hero svg,
+.preview-card svg,
+.edit-preview svg {
+  stroke: currentColor !important;
+  color: inherit !important;
+}
+
+/* Stronger dark-mode adjustments: ensure legible light text and subtle bg contrast */
+:root[class*='dark'] .edit-event-container,
+:root.dark .edit-event-container,
+[data-theme='dark'] .edit-event-container {
+  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.005));
+  border-color: rgba(148,163,184,0.08) !important;
+}
+
+:root[class*='dark'] .hero-sub,
+:root.dark .hero-sub,
+[data-theme='dark'] .hero-sub,
+:root[class*='dark'] .muted,
+:root.dark .muted,
+[data-theme='dark'] .muted,
+:root[class*='dark'] .meta-item,
+:root.dark .meta-item,
+[data-theme='dark'] .meta-item {
+  color: rgba(226,232,240,0.82) !important;
+}
+
+:root[class*='dark'] .input,
+:root.dark .input,
+[data-theme='dark'] .input,
+:root[class*='dark'] .textarea,
+:root.dark .textarea,
+[data-theme='dark'] .textarea {
+  background: hsl(var(--card)) !important;
+  border-color: rgba(148,163,184,0.08) !important;
+  color: rgba(226,232,240,0.95) !important;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.55);
+}
+
+:root[class*='dark'] .btn-primary,
+:root.dark .btn-primary,
+[data-theme='dark'] .btn-primary {
+  box-shadow: 0 10px 30px color-mix(in srgb, hsl(var(--primary)) 18%, black 12%) !important;
+}
+
+/* Make sure tiny/secondary labels (placeholders, small helpers) are visible */
+:root[class*='dark'] .input::placeholder,
+:root.dark .input::placeholder,
+[data-theme='dark'] .input::placeholder,
+:root[class*='dark'] .textarea::placeholder,
+:root.dark .textarea::placeholder,
+[data-theme='dark'] .textarea::placeholder {
+  color: rgba(226,232,240,0.46) !important;
+}
+
+/* Last-resort: force legibility for any lingering light-only rgba rules */
+.edit-event-container *,
+.edit-event-container {
+  color: inherit !important;
+}
+
+/* === Strong, theme-aware form control defaults ===
+   Ensure inputs/selects/textareas are visible in both light and dark modes.
+   These rules are intentionally slightly more specific and use !important to
+   override Tailwind/third-party resets that made fields invisible. */
+input,
+textarea,
+select,
+.input,
+.textarea,
+select.form-select,
+textarea.form-textarea {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px !important;
+  border-radius: 10px !important;
+  border: 1.25px solid hsl(var(--border)) !important; /* light-mode visible border */
+  background: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  transition: box-shadow .12s ease, border-color .12s ease, transform .06s ease, background .12s ease;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 6px 18px rgba(2,6,23,0.03);
+}
+
+/* Placeholder color */
+input::placeholder,
+textarea::placeholder,
+.input::placeholder,
+.textarea::placeholder {
+  color: hsl(var(--foreground) / 0.58) !important;
+}
+
+/* Non-focused fields still obvious */
+input:not(:focus),
+textarea:not(:focus),
+select:not(:focus),
+.input:not(:focus),
+.textarea:not(:focus) {
+  border-color: hsl(var(--border)) !important;
+}
+
+/* Focus state (both themes) */
+input:focus,
+textarea:focus,
+select:focus,
+.input:focus,
+.textarea:focus {
+  outline: none !important;
+  border-color: hsl(var(--primary)) !important;
+  box-shadow: 0 10px 30px color-mix(in srgb, hsl(var(--primary)) 14%, transparent) !important;
+  transform: translateY(-1px);
+}
+
+/* Dark mode: distinct background & visible border */
+:root[class*='dark'] input,
+:root.dark input,
+[data-theme='dark'] input,
+:root[class*='dark'] textarea,
+:root.dark textarea,
+[data-theme='dark'] textarea,
+:root[class*='dark'] select,
+:root.dark select,
+[data-theme='dark'] select,
+:root[class*='dark'] .input,
+:root.dark .input,
+[data-theme='dark'] .input,
+:root[class*='dark'] .textarea,
+:root.dark .textarea,
+[data-theme='dark'] .textarea {
+  background: hsl(var(--card)) !important;
+  color: rgba(226,232,240,0.96) !important;
+  border-color: rgba(148,163,184,0.16) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 8px 24px rgba(2,6,23,0.45) !important;
+}
+
+/* Dark-mode placeholders */
+:root[class*='dark'] input::placeholder,
+:root.dark input::placeholder,
+[data-theme='dark'] input::placeholder,
+:root[class*='dark'] textarea::placeholder,
+:root.dark textarea::placeholder,
+[data-theme='dark'] textarea::placeholder {
+  color: rgba(226,232,240,0.46) !important;
+}
+
+/* Target commonly used component-specific selectors to be extra-safe */
+.search-input,
+.selector-search,
+.filter-input,
+.filter-select,
+.edit-form .input,
+.edit-form .textarea {
+  border-radius: 10px;
+  padding: 10px 12px;
+  border: 1.25px solid hsl(var(--border)) !important;
+  background: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Ensure controls inside dark selector/menu also remain visible */
+:root[class*='dark'] .selector-search,
+:root[class*='dark'] .search-input,
+:root[class*='dark'] .filter-input {
+  background: rgba(255,255,255,0.02) !important;
+  border-color: rgba(148,163,184,0.16) !important;
+  color: rgba(226,232,240,0.94) !important;
+}
+
+/* End of input visibility fixes */
+
+/* EventDetails compact redesign styles */
+.society-avatar { width:44px; height:44px; border-radius:8px; object-fit:cover; border:1px solid hsl(var(--border)); }
+.society-chip { display:inline-flex; align-items:center; justify-content:center; }
+
+.description-large .description-content { font-size:1.02rem; line-height:1.6; color: hsl(var(--foreground)); }
+.description-large { background: hsl(var(--card)); border-radius:12px; border:1px solid hsl(var(--border)); }
+
+.meta-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  border: 1px solid hsl(var(--border));
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.04);
+}
+.meta-row { display:flex; gap:10px; align-items:flex-start; margin-bottom:12px; }
+.meta-icon { width:18px; height:18px; color: hsl(var(--foreground) / 0.9); }
+.meta-label { font-size:0.75rem; color: hsl(var(--foreground) / 0.7); }
+.meta-value { font-weight:600; color: hsl(var(--foreground)); }
+
+.small-card { background: hsl(var(--card)); border:1px solid hsl(var(--border)); padding:10px; border-radius:10px; }
+.small-label { font-size:0.75rem; color: hsl(var(--foreground) / 0.74); }
+.small-value { font-weight:600; color: hsl(var(--foreground)); }
+
+.other-data-small summary { list-style:none; }
+.other-data-small summary::-webkit-details-marker { display:none; }
+.other-data-small { color: hsl(var(--foreground) / 0.9); font-size:0.9rem; margin-top:8px; }
+
+/* Dark tweaks */
+:root[class*='dark'] .description-large { background: hsl(var(--card)); border-color: rgba(148,163,184,0.12); }
+:root[class*='dark'] .meta-card, :root[class*='dark'] .small-card { background: hsl(var(--card)); border-color: rgba(148,163,184,0.12); }
+
+/* Theme-aware navbar select (overrides default bg-white / text-gray rules)
+   Targets the select inside the right-side navbar (.navbar-right) so no JSX edits needed.
+   Uses project CSS variables so it works consistently in light & dark mode. */
+.navbar-right select {
+  min-width: 140px;
+  padding: 0.375rem 0.9rem;
+  padding-right: 2.2rem; /* room for caret */
+  border-radius: 0.375rem;
+  box-sizing: border-box;
+  border: 1px solid hsl(var(--border)) !important;
+  background-color: hsl(var(--card)) !important;
+  color: hsl(var(--foreground)) !important;
+  font-size: 0.9rem;
+  line-height: 1;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  /* CSS caret made from two gradients so color follows current text color */
+  background-image:
+    linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 12px) calc(50% - 3px), calc(100% - 7px) calc(50% - 3px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+/* Focus ring and border highlight */
+.navbar-right select:focus {
+  outline: none;
+  border-color: hsl(var(--primary)) !important;
+  box-shadow: 0 0 0 6px color-mix(in srgb, hsl(var(--primary)) 16%, transparent) !important;
+}
+
+/* Dark-mode variant: ensure contrast for text & border */
+:root[class*='dark'] .navbar-right select,
+:root.dark .navbar-right select,
+[data-theme='dark'] .navbar-right select {
+  background-color: hsl(var(--card)) !important;
+  color: rgba(226,232,240,0.94) !important;
+  border-color: rgba(148,163,184,0.12) !important;
+}
+
+/* Make <option> rows readable in both modes (browsers vary in support) */
+.navbar-right select option {
+  background: hsl(var(--card)) !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Small helper to avoid the select visually overflowing adjacent controls */
+.navbar-right select {
+  vertical-align: middle;
+}
+
+/* ClubSelector dropdown: ensure solid background in both light and dark themes */
+.club-selector-dropdown {
+  /* Use the token-defined card color as a solid background */
+  background-color: hsl(var(--card)) !important;
+  color: hsl(var(--foreground)) !important;
+  /* Prevent parent/backdrop transparency from bleeding through */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  /* keep border and shadow visible */
+  border-color: hsl(var(--border)) !important;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.12) !important;
+}
+
+/* Ensure option rows remain readable on the solid background */
+.club-selector-dropdown button,
+.club-selector-dropdown div {
+  background: transparent !important;
+  color: inherit !important;
+}

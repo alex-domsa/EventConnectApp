@@ -1,0 +1,102 @@
+/* Centers the event card perfectly on the screen*/
+.event-details-wrapper {
+  /* keep full viewport but don't force a centered flex column —
+     let the inner .max-w-5xl container control width */
+  min-height: calc(100vh - var(--navbar-height, 64px) - 32px);
+  display: block; /* was flex; that caused the inner content to collapse */
+  padding-top: calc(var(--navbar-height, 64px) + 1.5rem);
+  padding-bottom: 3rem;
+  width: 100%;
+  background: transparent;
+} 
+
+.event-details-container {
+  background-color: rgba(53, 52, 52, 0.9); /* keep theme */
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 1100px; /* increased from 600px */
+  margin: 1.5rem auto;
+  text-align: left;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+  transition: box-shadow 0.3s ease;
+}
+
+.event-details-container:hover {
+  box-shadow: 0 0 35px rgba(0, 255, 100, 0.6); /* brighter on hover */
+}
+
+/* Title */
+.event-details-container h1 {
+  color: #ff4d4d; /* red title */
+  margin-bottom: 1rem;
+}
+
+/* Bold labels */
+.event-details-container strong {
+  color: #7CFC00; /* light green */
+}
+
+/* Back button styling */
+.back-button {
+  display: block;
+  margin: 0 auto 1.5rem; /* remove top space, add bottom margin */
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 8px rgba(0, 255, 100, 0.2);
+}
+
+.back-button:hover {
+  background-color: #f5f5f5;
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(0, 255, 100, 0.6);
+}
+
+/* Optional: link styling (MU Life link) */
+.event-details-container a {
+  color: #00c1fc;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.event-details-container a:hover {
+  text-decoration: underline;
+}
+
+/* Optional: ensure the inner content stretches on larger screens */
+@media (min-width: 1024px) {
+  .event-details-wrapper .max-w-5xl {
+    max-width: 1100px; /* align with card width */
+  }
+}
+
+/* Clean, minimal overrides — most styling uses Tailwind + your index.css tokens */
+
+.event-details-card {
+  /* let Tailwind utilities handle most visuals; keep a small fallback */
+  color: var(--text, #0f172a);
+}
+
+/* image container fallback sizing for ImageHolder / Square */
+.event-details-card .event-image,
+.event-details-card .w-full.h-72 {
+  min-height: 18rem;
+}
+
+/* ensure code/JSON blocks wrap nicely */
+.event-details-card pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* small responsive tweak */
+@media (min-width: 1024px) {
+  .event-details-card { grid-template-columns: repeat(3, 1fr); }
+}
